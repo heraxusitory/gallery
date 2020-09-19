@@ -1,3 +1,3 @@
 <?php
 
-define('SIZE_OF_IMAGES', 750000);
+define('MAX_FILE_SIZE', 1000000);

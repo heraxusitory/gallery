@@ -1,27 +1,29 @@
 <?php
-require ($_SERVER['DOCUMENT_ROOT'] . '/constants.php');
+
 $uploadPаth = $_SERVER['DOCUMENT_ROOT'] . '/upload/';
-$expancion = ['image/jpeg', 'image/jpg', 'image/png'];
-var_dump($error);
+$expancions = ['.jpg', '.jpeg', '.png', '.gif'];
+$expancionssStr = implode(', ', $expancions);
+echo "<pre>";
+var_dump($_FILES['uploadImage']['type']);
+echo "</pre>";
+
 if (isset($_POST['submit'])) {
 	$total = count($_FILES['uploadImage']['name']);
-	var_dump($total);
 	for ($i=0; $i < $total ; $i++) { 
 		if (!empty($_FILES['uploadImage']['error'][$i])) {
-		$message = "Ошибка!";
-		break;
-	}
-		elseif ($_FILES['uploadImage']['size'][$i] <= SIZE_OF_IMAGES) {
-		move_uploaded_file($_FILES['uploadImage']['tmp_name'][$i], $uploadPаth . $_FILES['uploadImage']['name'][$i]);
-		$message = "Загрузка выполнена успешно!";
-	} else {
-		$message[] = "Размер загружаемого файла" . $_FILES['uploadImage']['name'][$i] . " свыше " . SIZE_OF_IMAGES . " байт";
+			$message = "Ошибка! (файл " . $_FILES['uploadImage']['name'][$i] . ")";
+		} elseif ($_FILES['uploadImage']['size'][$i] <= MAX_FILE_SIZE) {
+			foreach ($expancions as $exp) {
+				if (uploadFilesHelper\checkFileType($expancions, $_FILES['uploadImage']['type'][$i])) {
+					move_uploaded_file($_FILES['uploadImage']['tmp_name'][$i], $uploadPаth . $_FILES['uploadImage']['name'][$i]);
+					$message[] = "Загрузка " . $_FILES['uploadImage']['name'][$i] . " выполнена успешно!";
+				} else {
+					$message[] = 'Daunskoe расширение!';
+				}
+			}
+		} else {
+			$message[] = "Размер загружаемого файла " . $_FILES['uploadImage']['name'][$i] . " свыше " . MAX_FILE_SIZE . " байт";
 		}
-	}
+	}	
 	
 }
-
-
-// if (isset($_POST[])) {
-// 	# code...
-// }
