@@ -1,3 +1,33 @@
 .link-back {
 	margin-top: 15px;
 }
+
+#result {
+	text-align: center;
+}
+#result .success {
+	border: 1px solid rgb(120, 220, 120);
+	color: rgb(120, 220, 120);
+}
+#result .error {
+	border: 1px solid red;
+	color: red;
+}
+#result .success, 
+#result .error {
+	width: 80%;
+	margin: 0 auto;
+	margin-bottom: 15px;
+	padding: 10px 15px;
+	border-radius: 15px;
+}
+#fileList {
+	display: flex;
+	justify-content: center;
+}
+#fileList > .file {
+	margin: 5px;
+	color: #fff;
+	border: 1px solid #fff;
+	border-radius: 8px;
+}
